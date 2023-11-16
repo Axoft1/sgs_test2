@@ -36,9 +36,13 @@
         </div>
     </template>
 <script>
+import { useCookies } from "vue3-cookies";
 
 export default {
-    
+    setup() {
+        const { cookies } = useCookies();
+        return { cookies };
+    },
 data() {
     return {
         selectedCity: '',
@@ -122,9 +126,12 @@ data() {
         }
     },
      methods: {
+        
         submit(){
             if (this.selectedCity&&this.selectedWorkshop&& this.selectedEmployee&&this.selectedShift) {
-                console.log("запрос отправлен");
+                console.log("запрос отправлен");                
+                const selected =[JSON.stringify(this.selectedCity) , JSON.stringify(this.selectedWorkshop) , JSON.stringify(this.selectedEmployee) , JSON.stringify(this.selectedShift), JSON.stringify(this.selectedBrigade)]
+                this.cookies.set("selected", selected, 60)
             } else {
                 console.log("заполните все опции");
             }
